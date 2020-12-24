@@ -63,8 +63,8 @@ const generateJWT = (userData, ttl, callback) => {
 
 const verifyJWT = (token, callback) => {
   jwt.verify(token, keys.authSecret, (err, decryptedPayload) => {
-    if (err) {
-      throw err;
+    if (err.name === "TokenExpiredError") {
+      console.log(JSON.stringify(err));
     }
 
     callback({ _id: decryptedPayload.id });
